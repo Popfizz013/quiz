@@ -73,11 +73,10 @@ main{position:relative;z-index:1}
 @media (max-width:520px){.options{grid-template-columns:1fr}}
 .opt{all:unset;position:relative;cursor:pointer;display:flex;align-items:center;gap:12px;background:var(--surface);border:2px solid var(--line);border-bottom-width:5px;border-radius:16px;padding:14px 16px;font-size:1rem;line-height:1.35;transition:transform .18s cubic-bezier(.3,1.6,.5,1),border-color .15s,box-shadow .18s;animation:pop .4s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i) * 70ms + 120ms);overflow:hidden}
 @keyframes pop{from{transform:translateY(14px) scale(.94);opacity:0}}
-.opt:hover{transform:translateY(-3px) rotate(var(--tilt));border-color:var(--accent);box-shadow:0 8px 18px -10px color-mix(in srgb,var(--accent) 70%,transparent)}
+@media (hover:hover) and (pointer:fine){.screen:not(.still) .opt:hover{transform:translateY(-3px) rotate(var(--tilt));border-color:var(--accent);box-shadow:0 8px 18px -10px color-mix(in srgb,var(--accent) 70%,transparent)}.screen:not(.still) .opt:hover .key{background:var(--accent);color:var(--accent-ink)}}
 .opt:active{transform:translateY(1px) scale(.98);border-bottom-width:2px}
 .opt:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
 .opt .key{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:color-mix(in srgb,var(--accent) 14%,var(--surface));color:var(--accent);font-family:var(--display);font-weight:800;transition:background .15s,color .15s}
-.opt:hover .key{background:var(--accent);color:var(--accent-ink)}
 .opt.picked{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,var(--surface));animation:picked .45s cubic-bezier(.3,1.8,.5,1)}
 .opt.picked .key{background:var(--accent);color:var(--accent-ink)}
 .opt.faded{opacity:.35;transform:scale(.97)}
@@ -90,7 +89,7 @@ main{position:relative;z-index:1}
 /* --- Buttons --- */
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .btn{all:unset;cursor:pointer;font-family:var(--display);font-weight:800;font-size:1.05rem;padding:14px 28px;border-radius:999px;background:var(--accent);color:var(--accent-ink);box-shadow:0 5px 0 color-mix(in srgb,var(--accent) 55%,var(--fg));transition:transform .12s,box-shadow .12s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 color-mix(in srgb,var(--accent) 55%,var(--fg))}
+@media (hover:hover) and (pointer:fine){.btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 color-mix(in srgb,var(--accent) 55%,var(--fg))}}
 .btn:active{transform:translateY(4px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 55%,var(--fg))}
 .btn.pulse{animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{50%{box-shadow:0 5px 0 color-mix(in srgb,var(--accent) 55%,var(--fg)),0 0 0 10px color-mix(in srgb,var(--accent) 18%,transparent)}}
@@ -271,7 +270,11 @@ let busy = false;
 function show(html, after) {
   const old = app.firstElementChild;
   const put = () => {
-    app.innerHTML = `<section class="screen">${html}</section>`;
+    document.activeElement?.blur?.();
+    app.innerHTML = `<section class="screen still">${html}</section>`;
+    // Ignore hover until the pointer actually moves, so the card under the cursor isn't pre-highlighted
+    const sc = app.firstElementChild;
+    addEventListener("pointermove", () => sc.classList.remove("still"), { once: true });
     after && after();
     window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
   };

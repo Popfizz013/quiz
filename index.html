@@ -155,10 +155,10 @@ const QUIZ = {
     investors: {
       name: "Private Investors", color: "--investors",
       verdict: "Approve immediately, in full",
-      creature: "Swordfish", creatureLine: "Fast, sharp and already halfway to the finish line.",
+      creature: "Swordfish", creatureLine: "Quick, decisive and always moving forward.",
       tagline: "Every month of delay costs millions.",
       about: "You're backing the project with real money. You want a fast, full approval so construction can start, contracts can be locked in and the Illawarra doesn't lose out to other offshore wind zones competing for the same investment.",
-      argue: ["Delays push up costs and scare investors away to other states", "Thousands of construction and maintenance jobs, plus a new industry at Port Kembla", "Clean power for the grid as coal plants close"],
+      argue: ["Delays push up costs and can send investment to other states", "Thousands of construction and maintenance jobs, plus a new industry at Port Kembla", "Clean power for the grid as coal plants close"],
       ask: "If we delay, what does it cost, and who pays for it?"
     },
     enviro: {
@@ -177,43 +177,43 @@ const QUIZ = {
       creature: "Dolphin pod", creatureLine: "Nobody gets left behind, and everyone gets a say.",
       tagline: "Nothing about us without us.",
       about: "You speak for the Dharawal Traditional Owners of this sea country and the people who live along the coast. You aren't against the project, but it shouldn't go ahead until the people affected have genuinely had their say.",
-      argue: ["Sea country holds cultural value that hasn't been properly assessed", "Consultation so far has felt rushed and one-way", "Locals, fishers and surfers live with the result long after the developers leave"],
+      argue: ["Sea country holds cultural value that needs a full assessment", "Consultation needs more time to reach everyone affected", "Locals, fishers and surfers will live alongside the project for decades"],
       conditions: ["Free, prior and informed consent from Dharawal Traditional Owners before approval", "A cultural heritage assessment of the sea country in the zone", "Further independent research on whale migration and fishing impacts", "A community benefit-sharing agreement with local jobs and funding for coastal towns"],
       ask: "Who exactly was consulted, and did their answers change anything?"
     },
     alt: {
       name: "Alternative Energy Sector", color: "--alt",
       verdict: "Reject entirely",
-      creature: "Octopus", creatureLine: "Eight arms, and every one of them points to a better idea.",
-      tagline: "Yes to clean energy. No to this project.",
-      about: "You represent the solar, battery, pumped hydro and onshore wind industries. You support moving away from coal, but you think offshore wind is the slowest and most expensive way to get there. The same money would deliver more clean power, sooner, on land.",
-      argue: ["Offshore wind costs more per unit of power than onshore solar and wind", "Offshore wind projects overseas have been cancelled or delayed over rising costs", "Rooftop solar, big batteries and pumped hydro can be built faster and closer to where power is used"],
-      ask: "Why spend billions offshore when land-based renewables can do the job cheaper and sooner?"
+      creature: "Octopus", creatureLine: "Eight arms and always has more than one option.",
+      tagline: "There's more than one way to power the Illawarra.",
+      about: "You represent the other energy industries that already supply the region, including coal, gas, solar and onshore wind. You think the offshore wind zone carries too much cost and risk, and that the region's power needs can be met by sources that are already working here.",
+      argue: ["Coal and gas plants supply steady power in any weather, which keeps the grid stable", "Onshore solar and wind can usually be built faster and for less than offshore wind", "Offshore wind projects overseas have been cancelled or delayed over rising costs"],
+      ask: "Why commit billions offshore when other energy sources are already available?"
     }
   },
   questions: [
     { q: "Breaking news: giant turbines might pop up off the Illawarra coast. Your gut reaction?",
-      options: [["Great, let's get building before another state beats us to it.","investors"],["Good idea, as long as it's done right for the ocean.","enviro"],["Who was asked about this, and when?","community"],["Why offshore? Solar and batteries on land would be cheaper and faster.","alt"]] },
+      options: [["Great, this is going to be a massive development and advancement for New South Wales.","investors"],["Good idea, as long as it's done right for the ocean.","enviro"],["Who was asked about this, and when?","community"],["Why offshore? We already have other ways to power the region.","alt"]] },
     { q: "Which piece of evidence would sway you most?",
-      options: [["A business case showing returns and jobs","investors"],["A marine ecology impact study","enviro"],["A report on Traditional Owner and community consultation","community"],["A cost comparison with solar, batteries and pumped hydro","alt"]] },
+      options: [["A financial report showing how many jobs and how much return the project could create","investors"],["A marine ecology impact study","enviro"],["A report on Traditional Owner and community consultation","community"],["A cost comparison of every energy option, from gas to solar","alt"]] },
     { q: "Who should have the biggest say in the final decision?",
-      options: [["The developers putting up the money","investors"],["Scientists and environmental groups","enviro"],["Traditional Owners and people who live on the coast","community"],["Independent energy planners who compare every option","alt"]] },
+      options: [["The developers who carry the financial risk","investors"],["Scientists and environmental groups","enviro"],["Traditional Owners and people who live on the coast","community"],["Energy companies with decades of experience running the grid","alt"]] },
     { q: "What's the biggest risk in getting this decision wrong?",
-      options: [["Delays scare investors off to other states","investors"],["Building without protections for whales and seabirds","enviro"],["Rushing past Traditional Owners and locals","community"],["Locking billions into the most expensive kind of renewable","alt"]] },
+      options: [["Losing the chance for NSW to lead the sustainable energy sector","investors"],["Building without protections for whales and seabirds","enviro"],["Rushing past Traditional Owners and locals","community"],["Higher power bills and a less reliable grid","alt"]] },
     { q: "It's a sunny Saturday in the Gong. Where are you?",
-      options: [["Brunch while checking how your shares are going","investors"],["A beach clean-up or whale watching","enviro"],["The local market or a community event","community"],["Fitting solar panels to the roof","alt"]] },
+      options: [["Catching up on business news over a coffee","investors"],["A beach clean-up or whale watching","enviro"],["The local market or a community event","community"],["Watching the footy with mates from work","alt"]] },
     { q: "Which 2035 headline would make you proudest?",
-      options: [["Illawarra wind farm delivers record returns","investors"],["Whales thrive alongside the turbines","enviro"],["Traditional Owners co-manage the wind zone","community"],["Rooftop solar and big batteries now power the Illawarra","alt"]] },
+      options: [["Illawarra wind farm delivers record returns","investors"],["Whales thrive alongside the turbines","enviro"],["Traditional Owners co-manage the wind zone","community"],["Illawarra powered by a mix of proven energy sources","alt"]] },
     { q: "The town hall meeting is getting spicy. You grab the mic and say…",
-      options: [["Every month we wait adds millions to the cost.","investors"],["Yes, but only with proper protections written in.","enviro"],["Slow down. Not everyone has been heard yet.","community"],["We want clean energy too, just not this project.","alt"]] },
+      options: [["Every month we wait adds millions to the cost.","investors"],["Yes, but only with proper protections written in.","enviro"],["Slow down. Not everyone has been heard yet.","community"],["Let's not bet everything on one project.","alt"]] },
     { q: "What should be attached to the project's approval?",
-      options: [["Nothing extra. Approve it as it is.","investors"],["A pause on construction during whale migration season","enviro"],["Sign-off from Dharawal Traditional Owners first","community"],["Nothing. The money should go to cheaper options on land.","alt"]] },
+      options: [["Nothing extra. Approve it as it is.","investors"],["A pause on construction during migration season for animals in the Illawarra region","enviro"],["Sign-off from Dharawal Traditional Owners first","community"],["Nothing, because the project shouldn't go ahead","alt"]] },
     { q: "Doom-scrolling at 11pm. Which headline makes you stop?",
-      options: [["Billion-dollar offshore wind deal signed","investors"],["Record humpback numbers spotted off Wollongong","enviro"],["Locals call for more say on the wind zone","community"],["Solar and battery prices hit a new low","alt"]] },
+      options: [["Billion-dollar offshore wind deal signed","investors"],["Record albatross numbers spotted off Wollongong","enviro"],["Locals call for more say on the wind zone","community"],["New report questions the cost of offshore wind","alt"]] },
     { q: "What does a good outcome look like in 20 years?",
-      options: [["A booming clean energy industry with strong returns","investors"],["Clean power and a healthy ocean","enviro"],["A project the community and Traditional Owners helped shape","community"],["Clean power built where it's cheapest and fastest","alt"]] },
+      options: [["A booming clean energy industry with strong returns","investors"],["Clean power and a healthy ocean","enviro"],["A project the community and Traditional Owners helped shape","community"],["A reliable energy mix that keeps local industry running","alt"]] },
     { q: "Final question! You get to name the wind farm. What's it called?",
-      options: [["Illawarra Wind Capital","investors"],["Humpback Highway Wind","enviro"],["A name chosen with Dharawal Elders","community"],["I'd cancel it and build a solar farm instead.","alt"]] }
+      options: [["Illawarra Wind Capital","investors"],["Humpback Highway Wind","enviro"],["A name chosen with Dharawal Elders","community"],["No name needed. I'd put the money into other energy projects.","alt"]] }
   ]
 };
 /* ===== end of editable section ===== */

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Illawarra Wind Stakeholder Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: single mobile-first column, one question per screen, like a sea-chart card held in the hand */
+:root{
+  --bg:#eaf2f7; --surface:#ffffff; --fg:#0c2433; --muted:#4b6677; --line:#c9dae5;
+  --accent:#155f86; --accent-ink:#ffffff; --signal:#f2b632;
+  --climate:#2f8f5b; --ocean:#1f6fb2; --coastal:#c0632f; --industry:#6a5bb5;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#081722; --surface:#0f2534; --fg:#e2eef5; --muted:#9bb4c4; --line:#21405a;
+  --accent:#6cbbe3; --accent-ink:#05202e; --signal:#f5c451;
+  --climate:#5cc48a; --ocean:#5aa6e6; --coastal:#e8925f; --industry:#a497ea; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#081722; --surface:#0f2534; --fg:#e2eef5; --muted:#9bb4c4; --line:#21405a;
+  --accent:#6cbbe3; --accent-ink:#05202e; --signal:#f5c451;
+  --climate:#5cc48a; --ocean:#5aa6e6; --coastal:#e8925f; --industry:#a497ea; color-scheme:dark}
+*{box-sizing:border-box} body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5;padding-inline:16px;padding-block:24px 48px}
+main{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2rem,8vw,2.8rem);font-weight:800}
+h2{font-size:clamp(1.4rem,5.5vw,1.8rem);font-weight:700}
+p{margin:0}
+.lede{color:var(--muted);max-width:60ch}
+.whale{width:min(340px,100%);height:auto;color:var(--accent);overflow:visible}
+.turbines{color:var(--muted)}
+.blades{animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.blades{animation:none}}
+.whale .body{animation:swim 4s ease-in-out infinite}
+.whale .spout{animation:spout 4s ease-in-out infinite;transform-origin:30px 22px}
+.whale .wave{stroke:var(--line)}
+@keyframes swim{50%{transform:translateY(-4px) rotate(-1.5deg)}}
+@keyframes spout{0%,60%,100%{opacity:0;transform:scaleY(.4)}20%,40%{opacity:1;transform:scaleY(1)}}
+.fluke{width:40px;height:auto;color:var(--role);align-self:flex-end;margin-top:-4px}
+@media (prefers-reduced-motion:reduce){.whale .body,.whale .spout{animation:none}}
+body{background-image:radial-gradient(ellipse 120% 40% at 50% 100%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%);background-attachment:fixed}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress span{display:block;height:100%;background:var(--accent);transition:width .3s}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{all:unset;cursor:pointer;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:14px 16px;font-size:1rem;line-height:1.4;transition:border-color .15s,transform .15s}
+.opt:hover{border-color:var(--accent)}
+.opt:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{all:unset;cursor:pointer;font-family:var(--display);font-weight:700;padding:12px 22px;border-radius:999px;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--fg);border:2px solid var(--line)}
+.btn:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.btn[disabled]{opacity:.4;cursor:default}
+.role-card{background:var(--surface);border:2px solid var(--role);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.role-tag{align-self:flex-start;background:var(--role);color:var(--bg);font-family:var(--display);font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.role-card h3{font-family:var(--display);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:6px 0 0}
+.role-card ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:7.5rem 1fr 2rem;align-items:center;gap:10px;font-size:.9rem;font-variant-numeric:tabular-nums}
+.bar .track{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.bar .fill{height:100%;border-radius:5px}
+.note{font-size:.85rem;color:var(--muted)}
+</style>
+
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+
+<script>
+/* ===== EDIT HERE: roles and questions =====
+   Each option names the role it scores for. Highest total wins. */
+const QUIZ = {
+  title: "Which stakeholder are you?",
+  intro: "The Illawarra offshore wind zone is still awaiting a decision. Answer six quick questions to find out which side of the table you'll argue from in today's discussion.",
+  roles: {
+    climate: {
+      name: "Climate Champion", color: "--climate",
+      tagline: "Every year of delay is another year of coal.",
+      about: "You see the wind zone as a chance to pull the Illawarra off fossil fuels. Speed and scale matter most to you, and you'll accept trade-offs to get clean power on the grid.",
+      argue: ["Emissions cuts from replacing coal-fired generation", "The cost of delay as coal plants retire", "Australia's net zero commitments"],
+      ask: "What's the climate cost of saying no?"
+    },
+    ocean: {
+      name: "Ocean Guardian", color: "--ocean",
+      tagline: "The sea isn't empty space.",
+      about: "You speak for the marine environment: migrating whales, seabirds, reefs and the fishers who depend on them. You aren't against renewables, but you want the ecological risks proven manageable first.",
+      argue: ["Whale migration routes and seabird collision risk", "Noise and seabed disturbance during construction", "Impacts on commercial and recreational fishing"],
+      ask: "Who monitors the marine impacts, and what happens if they're worse than predicted?"
+    },
+    coastal: {
+      name: "Coastal Local", color: "--coastal",
+      tagline: "Nothing about us without us.",
+      about: "You represent the people who live along the coast. Views from the escarpment and beaches, tourism, surfing and whether the community was genuinely consulted all weigh on your mind.",
+      argue: ["Visual impact from the coastline", "Whether consultation was meaningful", "Who shares in the benefits locally"],
+      ask: "What does the community actually get out of this?"
+    },
+    industry: {
+      name: "Industry Builder", color: "--industry",
+      tagline: "Port Kembla can build the future.",
+      about: "You see the wind zone as an economic lifeline for a region built on steel and heavy industry. Local jobs, manufacturing and skills are what make this worth doing.",
+      argue: ["Construction and maintenance jobs", "Port Kembla as a manufacturing and assembly hub", "Retraining workers from declining industries"],
+      ask: "How many of these jobs will actually stay in the Illawarra?"
+    }
+  },
+  questions: [
+    { q: "You hear a wind farm is planned 20 km off the Illawarra coast. What's your first thought?",
+      options: [["That's a big cut to our emissions.","climate"],["What about the whales passing through?","ocean"],["What will it look like from the beach?","coastal"],["That could mean a lot of jobs at Port Kembla.","industry"]] },
+    { q: "Which piece of evidence would sway you most?",
+      options: [["Emissions modelling for the next 20 years","climate"],["A marine ecology impact study","ocean"],["A survey of local residents","coastal"],["An economic and employment forecast","industry"]] },
+    { q: "Who should have the biggest say in the final decision?",
+      options: [["Climate and energy scientists","climate"],["Marine ecologists and fishers","ocean"],["People who live along the coast","coastal"],["Unions and local industry","industry"]] },
+    { q: "What's the biggest risk in getting this decision wrong?",
+      options: [["Moving too slowly while the climate warms","climate"],["Harm to marine habitats that can't be undone","ocean"],["Locals feeling ignored and losing trust","coastal"],["Jobs and manufacturing going overseas","industry"]] },
+    { q: "Pick a free Saturday:",
+      options: [["Volunteering with a climate action group","climate"],["Snorkelling or whale watching","ocean"],["Surfing or a walk along the beach","coastal"],["Building or fixing something in the shed","industry"]] },
+    { q: "Which 2035 headline would make you proudest?",
+      options: [["Illawarra wind powers a million homes","climate"],["Whale numbers thrive alongside the turbines","ocean"],["Locals share in wind farm profits","coastal"],["Port Kembla becomes a renewable manufacturing hub","industry"]] }
+  ]
+};
+/* ===== end of editable section ===== */
+
+const app = document.getElementById("app");
+let step = -1, answers = [], order = [];
+
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const tb = (x, hub, len, dur) => `<g class="turbine-mast"><path d="M${x} ${hub} L${x - 1.2} 80 M${x} ${hub} L${x + 1.2} 80"/>
+    <g class="blades" style="transform-origin:${x}px ${hub}px;animation-duration:${dur}s"><path d="M${x} ${hub} l0 -${len}"/><path d="M${x} ${hub} l${(len * .866).toFixed(1)} ${len / 2}"/><path d="M${x} ${hub} l-${(len * .866).toFixed(1)} ${len / 2}"/></g>
+    <circle cx="${x}" cy="${hub}" r="1.8" fill="currentColor" stroke="none"/></g>`;
+const turbine = `<svg class="whale" viewBox="0 0 240 84" aria-hidden="true">
+  <g class="turbines" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    ${tb(176, 34, 16, 5)}${tb(204, 44, 12, 6.5)}${tb(228, 52, 9, 4.2)}
+  </g>
+  <g class="spout" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+    <path d="M30 22 C 28 14, 22 10, 18 8"/><path d="M30 22 C 30 12, 30 8, 30 4"/><path d="M30 22 C 32 14, 38 10, 42 8"/></g>
+  <g class="body">
+    <path fill="currentColor" d="M10 44 C 14 28, 40 22, 70 26 C 92 29, 108 36, 122 34 L 138 20 C 142 28, 140 36, 132 40 L 148 48 C 138 50, 130 46, 124 44 C 110 58, 76 64, 46 60 C 26 58, 8 54, 10 44 Z"/>
+    <path fill="currentColor" opacity=".55" d="M58 56 C 62 66, 70 72, 80 74 C 74 66, 70 60, 68 57 Z"/>
+    <g fill="none" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round" opacity=".6">
+      <path d="M18 52 C 34 57, 56 58, 74 56"/><path d="M22 55.5 C 36 59.5, 54 60.5, 68 59"/></g>
+    <circle cx="26" cy="44" r="2.4" fill="var(--bg)"/>
+  </g>
+  <path class="wave" fill="none" stroke-width="2.5" stroke-linecap="round" d="M2 80 q 10 -6 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 20 0 t 18 0"/>
+</svg>`;
+const fluke = `<svg class="fluke" viewBox="0 0 40 28" aria-hidden="true"><path fill="currentColor" d="M20 28 C 19 20, 18 14, 14 10 C 9 5, 3 6, 0 2 C 8 0, 16 2, 20 8 C 24 2, 32 0, 40 2 C 37 6, 31 5, 26 10 C 22 14, 21 20, 20 28 Z"/></svg>`;
+
+function start() {
+  app.innerHTML = `${turbine}
+    <div class="eyebrow"><span>Illawarra offshore wind</span><span>${QUIZ.questions.length} questions</span></div>
+    <h1>${esc(QUIZ.title)}</h1>
+    <p class="lede">${esc(QUIZ.intro)}</p>
+    <div class="row"><button class="btn" id="go">Start</button></div>`;
+  document.getElementById("go").onclick = () => { step = 0; answers = []; order = QUIZ.questions.map(q => shuffle(q.options)); render(); };
+}
+
+function render() {
+  const n = QUIZ.questions.length, q = QUIZ.questions[step];
+  app.innerHTML = `
+    <div class="eyebrow"><span>Question ${step + 1} of ${n}</span><span>${Math.round(step / n * 100)}%</span></div>
+    <div class="progress"><span style="width:${step / n * 100}%"></span></div>
+    <h2>${esc(q.q)}</h2>
+    <div class="options">${order[step].map((o, i) => `<button class="opt" data-i="${i}" aria-pressed="${answers[step] === o[1] && order[step].findIndex(x => x[1] === answers[step]) === i}">${esc(o[0])}</button>`).join("")}</div>
+    <div class="row">${step > 0 ? `<button class="btn ghost" id="back">Back</button>` : ""}</div>`;
+  app.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    answers[step] = order[step][+b.dataset.i][1];
+    step < n - 1 ? (step++, render()) : result();
+  });
+  const back = document.getElementById("back"); if (back) back.onclick = () => { step--; render(); };
+  app.querySelector(".opt")?.focus({preventScroll:true});
+}
+
+function result() {
+  const tally = Object.fromEntries(Object.keys(QUIZ.roles).map(k => [k, 0]));
+  answers.forEach(a => tally[a]++);
+  const max = Math.max(...Object.values(tally));
+  // Tie-break: the latest answer among the tied roles wins
+  const tied = Object.keys(tally).filter(k => tally[k] === max);
+  const key = tied.length === 1 ? tied[0] : [...answers].reverse().find(a => tied.includes(a));
+  const r = QUIZ.roles[key];
+  app.innerHTML = `
+    <div class="eyebrow"><span>Your role</span><span>${max} of ${answers.length} answers</span></div>
+    <div class="role-card" style="--role:var(${r.color})">
+      <span class="role-tag">${esc(r.name)}</span>
+      <h2>${esc(r.tagline)}</h2>
+      <p>${esc(r.about)}</p>
+      <h3>Argue from</h3>
+      <ul>${r.argue.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+      <h3>Put this to the other side</h3>
+      <p><strong>${esc(r.ask)}</strong></p>
+      ${fluke}
+    </div>
+    <h3 class="eyebrow"><span>Your full mix</span></h3>
+    <div class="bars">${Object.entries(QUIZ.roles).map(([k, v]) => `
+      <div class="bar"><span>${esc(v.name)}</span><div class="track"><div class="fill" style="width:${tally[k] / answers.length * 100}%;background:var(${v.color})"></div></div><span>${tally[k]}</span></div>`).join("")}</div>
+    <p class="note">Show this screen to your facilitator so you can be grouped with your side.</p>
+    <div class="row"><button class="btn ghost" id="again">Retake</button></div>`;
+  document.getElementById("again").onclick = start;
+}
+
+start();
+</script>
+</body>
+</html>

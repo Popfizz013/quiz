@@ -107,15 +107,17 @@ h1 .wave-word{display:inline-block;color:var(--accent);animation:wiggle 3s ease-
 /* --- Result --- */
 .role-card{position:relative;background:var(--surface);border:3px solid var(--role);border-bottom-width:7px;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px;animation:reveal .7s cubic-bezier(.3,1.5,.5,1) both;overflow:hidden}
 @keyframes reveal{from{transform:scale(.7) rotate(-4deg);opacity:0}}
-.role-card::before{content:"";position:absolute;inset:auto -20% -60% -20%;height:90%;background:radial-gradient(ellipse at top,color-mix(in srgb,var(--role) 18%,transparent),transparent 70%);pointer-events:none}
 .role-card > *{position:relative}
+.role-label{font-family:var(--display);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:-8px}
 .role-name{font-family:var(--display);font-weight:800;font-size:clamp(2rem,9vw,3rem);line-height:1;color:var(--role);text-wrap:balance;margin:0}
 .role-tag{align-self:flex-start;background:var(--role);color:var(--surface);font-family:var(--display);font-weight:700;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
 .role-card h3{font-family:var(--display);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 0 0}
 .role-card ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
 .role-card li{display:flex;gap:10px;align-items:flex-start}
 .role-card li::before{content:"";flex:none;width:10px;height:10px;margin-top:.45em;border-radius:50%;border:2.5px solid var(--role)}
-.ask{background:color-mix(in srgb,var(--role) 12%,var(--surface));border-radius:14px;padding:14px 16px;font-family:var(--display);font-weight:700;font-size:1.1rem;line-height:1.3}
+.ask-box{background:color-mix(in srgb,var(--role) 12%,var(--surface));border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.role-card .ask-box h3{margin:0}
+.ask{font-family:var(--display);font-weight:700;font-size:1.1rem;line-height:1.3}
 .fluke{width:52px;height:auto;color:var(--role);align-self:flex-end;margin-top:-6px;animation:flip 2.4s ease-in-out infinite;transform-origin:bottom center}
 @keyframes flip{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg) translateY(-3px)}}
 .bars{display:flex;flex-direction:column;gap:12px}
@@ -149,70 +151,66 @@ h1 .wave-word{display:inline-block;color:var(--accent);animation:wiggle 3s ease-
 const QUIZ = {
   title: "Which stakeholder are you?",
   titleHighlight: "stakeholder",
-  intro: "Should the Illawarra offshore wind zone go ahead? The decision is still pending. Answer eleven quick questions to find out which stakeholder you'll argue as in today's debate.",
+  intro: "Should the Illawarra offshore wind zone go ahead? The decision is still pending. Answer nine quick questions to find out which stakeholder you'll argue as in today's debate.",
   roles: {
+    alt: {
+      name: "Fossil Fuel Company", color: "--alt",
+      verdict: "Reject entirely",
+      creature: "Sea turtle", creatureLine: "Steady, dependable and sticks with what has worked for generations.",
+      tagline: "Keep the Illawarra's workers working.",
+      about: "You are a fossil fuel company that owns 50 mines in the Illawarra region. You are pushing for a bill to expand the steelworks, so the region's current trade workers don't have to leave to find work elsewhere.",
+      argue: ["Mining and steelmaking have supported Illawarra families for generations", "Expanding the steelworks keeps skilled trade workers in the region", "Offshore wind is costly and unproven here, and projects overseas have been cancelled over rising costs"],
+      ask: "If the project goes ahead, what happens to the region's trade workers?"
+    },
+    enviro: {
+      name: "Environmental Agency", color: "--enviro",
+      verdict: "Approve permits with conditions",
+      creature: "Albatross", creatureLine: "Watches over the whole coastline from above.",
+      tagline: "Clean power, as long as the albatross can share the sky.",
+      about: "You are part of an environmental agency that specialises in protecting albatross, which fly at the same height as the proposed wind turbines. You support the project, but you're pushing for government action to recognise the albatross's ecological importance.",
+      argue: ["Albatross fly at the same height as the proposed turbine blades", "Humpback whales migrate through this area, and noisy construction could disrupt their journey", "With the right conditions, clean energy and wildlife protection can go ahead together"],
+      conditions: ["Formal government recognition of the albatross's ecological importance", "Turbine height and placement planned around albatross flight paths", "Noisy construction paused while humpback whales migrate through the area", "Independent seabird monitoring, with results made public", "Protection of local fishers' rights to the fishing grounds and food sources they rely on"],
+      ask: "How will you protect seabirds that fly right through the turbine zone?"
+    },
+    community: {
+      name: "Dharawal Community Scholar", color: "--community",
+      verdict: "Delay approval for further consultation",
+      creature: "Dolphin pod", creatureLine: "Nobody gets left behind, and everyone gets a say.",
+      tagline: "Listen first, build second.",
+      about: "You are a scholar who has researched and worked with the Dharawal community. The community wants further consultation before any wind project goes ahead, and you're making the case for that time to be given.",
+      argue: ["The Dharawal community has asked for more consultation before the project goes ahead", "Sea country holds cultural value that needs a full assessment", "Decisions made with a community last longer than decisions made for it"],
+      conditions: ["Consultation led by and with the Dharawal community before any approval", "A cultural heritage assessment of the sea country in the zone", "Time for further independent research on the project's impacts", "An agreement on how the community will have a say in the project's future"],
+      ask: "Has the Dharawal community been genuinely consulted, and did it change anything?"
+    },
     investors: {
-      name: "Private Investors", color: "--investors",
+      name: "Private Investor", color: "--investors",
       verdict: "Approve immediately, in full",
       creature: "Swordfish", creatureLine: "Quick, decisive and always moving forward.",
       tagline: "Every month of delay costs millions.",
-      about: "You're backing the project with real money. You want a fast, full approval so construction can start, contracts can be locked in and the Illawarra doesn't lose out to other offshore wind zones competing for the same investment.",
-      argue: ["Delays push up costs and can send investment to other states", "Thousands of construction and maintenance jobs, plus a new industry at Port Kembla", "Clean power for the grid as coal plants close"],
+      about: "You are a private investor in a renewable energy company and a major developer. You want the project approved now, in full, so you can expand your business in the Illawarra.",
+      argue: ["Delays push up costs and can send investment to other states", "Thousands of construction and maintenance jobs, plus a new industry for the region", "Clean power for the grid as older power stations close"],
       ask: "If we delay, what does it cost, and who pays for it?"
-    },
-    enviro: {
-      name: "Environmental Advocates", color: "--enviro",
-      verdict: "Approve now, with conditions",
-      creature: "Humpback whale", creatureLine: "Big-hearted, but keeps an eye on the whole ocean.",
-      tagline: "Clean power and a healthy ocean. We need both.",
-      about: "You want the wind farm built because cutting emissions is urgent, but not at any cost to marine life. You'd approve it straight away, as long as firm environmental protections are written into the approval.",
-      argue: ["Offshore wind is one of the biggest emissions cuts available to the region", "Protections can be made a legal condition of approval", "Doing nothing harms the ocean too, through warming and acidification"],
-      conditions: ["Pause noisy construction during humpback whale migration season (roughly May to November)", "Independent marine monitoring of whales, seabirds and fish, with results made public", "Keep turbines and cables away from sensitive reefs and seabird foraging areas", "A decommissioning bond so the developer pays to remove turbines at end of life"],
-      ask: "Will you commit to these conditions in writing, or only promise them?"
-    },
-    community: {
-      name: "Indigenous and Local Community", color: "--community",
-      verdict: "Delay for further consultation",
-      creature: "Dolphin pod", creatureLine: "Nobody gets left behind, and everyone gets a say.",
-      tagline: "Nothing about us without us.",
-      about: "You speak for the Dharawal Traditional Owners of this sea country and the people who live along the coast. You aren't against the project, but it shouldn't go ahead until the people affected have genuinely had their say.",
-      argue: ["Sea country holds cultural value that needs a full assessment", "Consultation needs more time to reach everyone affected", "Locals, fishers and surfers will live alongside the project for decades"],
-      conditions: ["Free, prior and informed consent from Dharawal Traditional Owners before approval", "A cultural heritage assessment of the sea country in the zone", "Further independent research on whale migration and fishing impacts", "A community benefit-sharing agreement with local jobs and funding for coastal towns"],
-      ask: "Who exactly was consulted, and did their answers change anything?"
-    },
-    alt: {
-      name: "Alternative Energy Sector", color: "--alt",
-      verdict: "Reject entirely",
-      creature: "Octopus", creatureLine: "Eight arms and always has more than one option.",
-      tagline: "There's more than one way to power the Illawarra.",
-      about: "You represent the other energy industries that already supply the region, including coal, gas, solar and onshore wind. You think the offshore wind zone carries too much cost and risk, and that the region's power needs can be met by sources that are already working here.",
-      argue: ["Coal and gas plants supply steady power in any weather, which keeps the grid stable", "Onshore solar and wind can usually be built faster and for less than offshore wind", "Offshore wind projects overseas have been cancelled or delayed over rising costs"],
-      ask: "Why commit billions offshore when other energy sources are already available?"
     }
   },
   questions: [
     { q: "Breaking news: giant turbines might pop up off the Illawarra coast. Your gut reaction?",
-      options: [["Great, this is going to be a massive development and advancement for New South Wales.","investors"],["Good idea, as long as it's done right for the ocean.","enviro"],["Who was asked about this, and when?","community"],["Why offshore? We already have other ways to power the region.","alt"]] },
+      options: [["Great, this is going to be a massive development and advancement for New South Wales.","investors"],["Exciting, but what about the birds and sea life out there?","enviro"],["I'd want to know who was asked about this first.","community"],["Hmm. What happens to the jobs we already have?","alt"]] },
     { q: "Which piece of evidence would sway you most?",
-      options: [["A financial report showing how many jobs and how much return the project could create","investors"],["A marine ecology impact study","enviro"],["A report on Traditional Owner and community consultation","community"],["A cost comparison of every energy option, from gas to solar","alt"]] },
-    { q: "Who should have the biggest say in the final decision?",
-      options: [["The developers who carry the financial risk","investors"],["Scientists and environmental groups","enviro"],["Traditional Owners and people who live on the coast","community"],["Energy companies with decades of experience running the grid","alt"]] },
-    { q: "What's the biggest risk in getting this decision wrong?",
-      options: [["Losing the chance for NSW to lead the sustainable energy sector","investors"],["Building without protections for whales and seabirds","enviro"],["Rushing past Traditional Owners and locals","community"],["Higher power bills and a less reliable grid","alt"]] },
+      options: [["A financial report showing how many jobs and how much return the project could create","investors"],["A study tracking seabird flight paths through the area","enviro"],["Records of conversations with the people whose land and sea it is","community"],["A report on what it would mean for local workers and industries","alt"]] },
     { q: "It's a sunny Saturday in the Gong. Where are you?",
-      options: [["Catching up on business news over a coffee","investors"],["A beach clean-up or whale watching","enviro"],["The local market or a community event","community"],["Watching the footy with mates from work","alt"]] },
-    { q: "Which 2035 headline would make you proudest?",
-      options: [["Illawarra wind farm delivers record returns","investors"],["Whales thrive alongside the turbines","enviro"],["Traditional Owners co-manage the wind zone","community"],["Illawarra powered by a mix of proven energy sources","alt"]] },
+      options: [["At a café, sketching out a new business idea","investors"],["Out on the water with a pair of binoculars","enviro"],["At a local cultural festival or talk","community"],["Helping a mate fix something in the garage","alt"]] },
+    { q: "Your friends would describe you as…",
+      options: [["Ambitious, always chasing the next big thing","investors"],["Caring, the one who notices the little things","enviro"],["A great listener who asks the deep questions","community"],["Loyal and practical, someone you can rely on","alt"]] },
     { q: "The town hall meeting is getting spicy. You grab the mic and say…",
-      options: [["Every month we wait adds millions to the cost.","investors"],["Yes, but only with proper protections written in.","enviro"],["Slow down. Not everyone has been heard yet.","community"],["Let's not bet everything on one project.","alt"]] },
-    { q: "What should be attached to the project's approval?",
-      options: [["Nothing extra. Approve it as it is.","investors"],["A pause on construction during migration season for animals in the Illawarra region","enviro"],["Sign-off from Dharawal Traditional Owners first","community"],["Nothing, because the project shouldn't go ahead","alt"]] },
+      options: [["Every month we wait, this gets more expensive.","investors"],["Let's do it, but let's do it properly.","enviro"],["Slow down. Not everyone has been heard yet.","community"],["Don't forget the people who built this region.","alt"]] },
+    { q: "What's the biggest risk in getting this decision wrong?",
+      options: [["Losing the chance for NSW to lead the sustainable energy sector","investors"],["Harm to wildlife that can't be undone","enviro"],["Repeating the mistake of not listening to communities","community"],["Local families losing the work they depend on","alt"]] },
     { q: "Doom-scrolling at 11pm. Which headline makes you stop?",
-      options: [["Billion-dollar offshore wind deal signed","investors"],["Record albatross numbers spotted off Wollongong","enviro"],["Locals call for more say on the wind zone","community"],["New report questions the cost of offshore wind","alt"]] },
-    { q: "What does a good outcome look like in 20 years?",
-      options: [["A booming clean energy industry with strong returns","investors"],["Clean power and a healthy ocean","enviro"],["A project the community and Traditional Owners helped shape","community"],["A reliable energy mix that keeps local industry running","alt"]] },
+      options: [["Billion-dollar energy deal signed in NSW","investors"],["Record albatross numbers spotted off Wollongong","enviro"],["Local Elders share stories of the coastline","community"],["Regional factory secures jobs for the next decade","alt"]] },
+    { q: "Pick a motto to live by:",
+      options: [["Fortune favours the bold.","investors"],["Leave it better than you found it.","enviro"],["Nothing about us without us.","community"],["If it ain't broke, don't fix it.","alt"]] },
     { q: "Final question! You get to name the wind farm. What's it called?",
-      options: [["Illawarra Wind Capital","investors"],["Humpback Highway Wind","enviro"],["A name chosen with Dharawal Elders","community"],["No name needed. I'd put the money into other energy projects.","alt"]] }
+      options: [["Illawarra Wind Capital","investors"],["Wings and Waves Wind","enviro"],["A name chosen together with the local community","community"],["Honestly? I'd rather it didn't need a name.","alt"]] }
   ]
 };
 /* ===== end of editable section ===== */
@@ -311,7 +309,7 @@ function start() {
     <div class="eyebrow"><span>Illawarra offshore wind</span><span>${QUIZ.questions.length} questions · 2 min</span></div>
     <h1>${title}</h1>
     <p class="lede">${esc(QUIZ.intro)}</p>
-    <div class="chips">${Object.values(QUIZ.roles).map((r, i) => `<span class="chip" style="--c:var(${r.color});--i:${i}">${esc(r.name)}</span>`).join("")}</div>
+    <div class="chips">${Object.values(QUIZ.roles).map((r, i) => `<span class="chip" style="--c:var(${r.color});--i:${i}">Option ${i + 1}: ${esc(r.verdict)}</span>`).join("")}</div>
     <div class="row"><button class="btn pulse" id="go">Dive in</button></div>`, () => {
     document.getElementById("go").onclick = () => { step = 0; answers = []; order = QUIZ.questions.map(q => shuffle(q.options)); render(-1); };
   });
@@ -358,9 +356,10 @@ function result() {
   const key = tied.length === 1 ? tied[0] : [...answers].reverse().find(a => tied.includes(a));
   const r = QUIZ.roles[key];
   show(`
-    <div class="eyebrow"><span>You surfaced as…</span><span>${max} of ${answers.length} answers</span></div>
+    <div class="eyebrow"><span>Your result</span><span>${max} of ${answers.length} answers</span></div>
     <div class="role-card" style="--role:var(${r.color})">
-      <span class="role-tag">Your position: ${esc(r.verdict)}</span>
+      <span class="role-tag">Option ${Object.keys(QUIZ.roles).indexOf(key) + 1}: ${esc(r.verdict)}</span>
+      <span class="role-label">Your hypothetical role is…</span>
       <p class="role-name">${esc(r.name)}</p>
       <h2>${esc(r.tagline)}</h2>
       <div class="creature"><span><span class="lbl">Your sea creature</span><b>${esc(r.creature)}.</b> ${esc(r.creatureLine)}</span></div>
@@ -368,8 +367,8 @@ function result() {
       <h3>Argue from</h3>
       <ul>${r.argue.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
       ${r.conditions ? `<h3>Your conditions</h3><ul>${r.conditions.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
-      <h3>Put this to the other side</h3>
-      <p class="ask">${esc(r.ask)}</p>
+      <div class="ask-box"><h3>Put this to the other side</h3>
+      <p class="ask">${esc(r.ask)}</p></div>
       ${fluke}
     </div>
     <h3 class="eyebrow"><span>Your full mix</span></h3>
